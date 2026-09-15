@@ -1,0 +1,6 @@
+url,url_length,hostname_length,num_dots,num_hyphens,num_at_symbols,num_question_marks,num_equal_signs,num_digits,num_special_chars,uses_https,contains_ip_address,uses_known_shortener,demo_label
+https://example.com,19,11,1,0,0,0,0,0,4,1,0,0,demo_legitimate
+https://accounts.example.com/login,34,20,2,0,0,0,0,0,6,1,0,0,demo_legitimate
+http://192.0.2.10/verify-account,32,10,3,1,0,0,0,7,8,0,1,0,demo_suspicious_pattern
+https://tinyurl.com/demo-link,29,11,1,1,0,0,0,0,6,1,0,1,demo_suspicious_pattern
+http://secure-login-example.com/account?user=12345,50,24,1,2,0,1,1,5,9,0,0,0,demo_suspicious_pattern

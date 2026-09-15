@@ -1,0 +1,6 @@
+url,demo_label
+https://example.com,demo_legitimate
+https://accounts.example.com/login,demo_legitimate
+http://192.0.2.10/verify-account,demo_suspicious_pattern
+https://tinyurl.com/demo-link,demo_suspicious_pattern
+http://secure-login-example.com/account?user=12345,demo_suspicious_pattern
