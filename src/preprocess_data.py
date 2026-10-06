@@ -2,28 +2,28 @@
 """
 Preprocess a labeled phishing-URL dataset.
 
-What this script does:
-- loads a CSV file
-- keeps URL + label columns
-- drops missing / blank rows
-- removes duplicate URLs
-- normalizes common label formats to 0/1
-- extracts lightweight lexical URL features
-- creates reproducible train/validation/test splits
-- writes processed CSV files to outputs/
+Supports normal label convention:
+    0 = legitimate
+    1 = phishing
+
+Also supports datasets such as UCI PhiUSIIL where:
+    1 = legitimate
+    0 = phishing
+
+Use --invert-labels for that case.
 
 Example:
     python src/preprocess_data.py \
-        --input data/urls.csv \
-        --url-column url \
-        --label-column label
+        --input data/PhiUSIIL_Phishing_URL_Dataset.csv \
+        --url-column URL \
+        --label-column label \
+        --invert-labels
 """
 
 from __future__ import annotations
 
 import argparse
 import ipaddress
-import re
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -81,11 +81,6 @@ def extract_lexical_features(url: str) -> dict:
 
 
 def normalize_label(value):
-    """
-    Converts common benign/phishing label formats to:
-      0 = legitimate / benign
-      1 = phishing / malicious
-    """
     if pd.isna(value):
         return None
 
@@ -115,6 +110,11 @@ def main():
     parser.add_argument("--label-column", default="label")
     parser.add_argument("--output-dir", default="outputs")
     parser.add_argument("--random-state", type=int, default=42)
+    parser.add_argument(
+        "--invert-labels",
+        action="store_true",
+        help="Swap 0 and 1 after label normalization. Use when 1=legitimate and 0=phishing."
+    )
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -133,18 +133,18 @@ def main():
     df = df[[args.url_column, args.label_column]].copy()
     df.columns = ["url", "label"]
 
-    # Basic cleaning
     df = df.dropna(subset=["url", "label"])
     df["url"] = df["url"].astype(str).str.strip()
     df = df[df["url"] != ""]
     df = df.drop_duplicates(subset=["url"]).reset_index(drop=True)
 
-    # Normalize labels
     df["label"] = df["label"].apply(normalize_label)
     df = df.dropna(subset=["label"])
     df["label"] = df["label"].astype(int)
 
-    # Feature extraction
+    if args.invert_labels:
+        df["label"] = 1 - df["label"]
+
     feature_rows = [extract_lexical_features(url) for url in df["url"]]
     feature_df = pd.DataFrame(feature_rows)
 
@@ -153,7 +153,6 @@ def main():
         axis=1
     )
 
-    # Reproducible 70/15/15 split
     train_df, temp_df = train_test_split(
         processed,
         test_size=0.30,
@@ -178,7 +177,7 @@ def main():
     print(f"Train: {len(train_df)}")
     print(f"Validation: {len(val_df)}")
     print(f"Test: {len(test_df)}")
-    print("\nClass distribution:")
+    print("\nClass distribution (0=legitimate, 1=phishing):")
     print(processed["label"].value_counts(normalize=True).sort_index())
 
 
