@@ -25,6 +25,50 @@ Completed or in progress:
 - Added initial Logistic Regression and Decision Tree baseline training
 - Added a common evaluation script for accuracy, precision, recall, F1 score, ROC-AUC, confusion matrices, inference time, and model size
 
+## Week 7 Experimental Results
+
+The preprocessing pipeline was successfully run on the PhiUSIIL phishing URL dataset.
+### Dataset Processing Summary
+
+After cleaning and removing duplicate URLs, the dataset contained:
+
+- **235,370 usable URLs**
+- **164,759 training samples**
+- **35,305 validation samples**
+- **35,306 test samples**
+- **42.7% legitimate URLs**
+- **57.3% phishing URLs**
+
+The project uses the following label convention:
+
+- `0 = legitimate`
+- `1 = phishing`
+
+### Validation Results
+
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Logistic Regression | 99.30% | 98.86% | 99.94% | 99.39% | 99.55% |
+| Decision Tree | 99.50% | 99.32% | 99.81% | 99.57% | 99.69% |
+
+### Held-Out Test Results
+
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Logistic Regression | 99.35% | 98.92% | 99.97% | 99.44% | 99.61% |
+| Decision Tree | 99.54% | 99.38% | 99.83% | 99.60% | 99.69% |
+
+### Efficiency Comparison
+
+| Model | Model Size | Approx. Inference Time per URL |
+|---|---:|---:|
+| Logistic Regression | 1,391 bytes | 0.000000047 sec |
+| Decision Tree | 46,313 bytes | 0.000000068 sec |
+
+The Decision Tree achieved slightly stronger overall classification performance, while Logistic Regression was substantially smaller and slightly faster. This supports the project's main goal of comparing phishing-detection accuracy with deployment efficiency rather than evaluating accuracy alone.
+
+The Logistic Regression model produced only **7 false negatives** on the held-out test set, while the Decision Tree produced **34 false negatives**.
+
 ## Repository Structure
 
 ```text
