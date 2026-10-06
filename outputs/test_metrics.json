@@ -1,0 +1,42 @@
+{
+  "logistic_regression": {
+    "accuracy": 0.993542174134708,
+    "precision": 0.9891889247627433,
+    "recall": 0.9996539450266957,
+    "f1": 0.9943939021391689,
+    "roc_auc": 0.9961100422290282,
+    "confusion_matrix": [
+      [
+        14857,
+        221
+      ],
+      [
+        7,
+        20221
+      ]
+    ],
+    "inference_seconds_total": 0.0016461249979329295,
+    "inference_seconds_per_url": 4.662451135594317e-08,
+    "model_size_bytes": 1391
+  },
+  "decision_tree": {
+    "accuracy": 0.9954398685775789,
+    "precision": 0.9937503075636042,
+    "recall": 0.9983191615582361,
+    "f1": 0.9960294951786727,
+    "roc_auc": 0.9968718018620096,
+    "confusion_matrix": [
+      [
+        14951,
+        127
+      ],
+      [
+        34,
+        20194
+      ]
+    ],
+    "inference_seconds_total": 0.00238679199537728,
+    "inference_seconds_per_url": 6.760301352113748e-08,
+    "model_size_bytes": 46313
+  }
+}
