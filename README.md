@@ -36,8 +36,8 @@ After cleaning and removing duplicate URLs, the dataset contained:
 - **164,759 training samples**
 - **35,305 validation samples**
 - **35,306 test samples**
-- **42.7% legitimate URLs**
-- **57.3% phishing URLs**
+- **57.3% legitimate URLs**
+- **42.7% phishing URLs**
 
 The project uses the following label convention:
 
@@ -48,26 +48,28 @@ The project uses the following label convention:
 
 | Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
 |---|---:|---:|---:|---:|---:|
-| Logistic Regression | 99.30% | 98.86% | 99.94% | 99.39% | 99.55% |
-| Decision Tree | 99.50% | 99.32% | 99.81% | 99.57% | 99.69% |
+| Logistic Regression | 99.29% | 99.95% | 98.39% | 99.16% | 99.61% |
+| Decision Tree | 99.48% | 99.87% | 98.93% | 99.39% | 99.66% |
 
 ### Held-Out Test Results
 
 | Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
 |---|---:|---:|---:|---:|---:|
-| Logistic Regression | 99.35% | 98.92% | 99.97% | 99.44% | 99.61% |
-| Decision Tree | 99.54% | 99.38% | 99.83% | 99.60% | 99.69% |
+| Logistic Regression | 99.41% | 99.94% | 98.67% | 99.30% | 99.67% |
+| Decision Tree | 99.54% | 99.77% | 99.14% | 99.45% | 99.66% |
 
 ### Efficiency Comparison
 
 | Model | Model Size | Approx. Inference Time per URL |
 |---|---:|---:|
-| Logistic Regression | 1,391 bytes | 0.000000047 sec |
-| Decision Tree | 46,313 bytes | 0.000000068 sec |
+| Logistic Regression | 1,391 bytes | 0.000000036 sec |
+| Decision Tree | 48,073 bytes | 0.000000068 sec |
 
-The Decision Tree achieved slightly stronger overall classification performance, while Logistic Regression was substantially smaller and slightly faster. This supports the project's main goal of comparing phishing-detection accuracy with deployment efficiency rather than evaluating accuracy alone.
+The Decision Tree achieved slightly higher overall accuracy, recall, and F1 score, while Logistic Regression was substantially smaller and achieved slightly higher precision and ROC-AUC.
 
-The Logistic Regression model produced only **7 false negatives** on the held-out test set, while the Decision Tree produced **34 false negatives**.
+This demonstrates the main accuracy-versus-efficiency trade-off being investigated in the project. The Decision Tree provides a small improvement in overall classification performance, while Logistic Regression provides very strong phishing URL detection with a much smaller model footprint.
+
+On the held-out test set, Logistic Regression produced 200 false negatives, while the Decision Tree produced 130 false negatives.
 
 ## Repository Structure
 
